@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
+
+
+    <LinearLayout
+        android:background="@color/gridviewContents"
+        android:id="@+id/contents"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="6">
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/videoNameText"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            style="@style/MyRedTextAppearance"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textStyle="bold"
+            style="@style/MyRedTextAppearance"
+            android:id="@+id/impressionsText"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textStyle="bold"
+            style="@style/MyRedTextAppearance"
+            android:id="@+id/videoNoOfTimesPlayedText"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textStyle="bold"
+            style="@style/MyRedTextAppearance"
+            android:id="@+id/videoPercentageText"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textStyle="bold"
+            style="@style/MyRedTextAppearance"
+            android:id="@+id/videoStatus"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textStyle="bold"
+            style="@style/MyRedTextAppearance"
+            android:id="@+id/errorCountDisp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+</RelativeLayout>

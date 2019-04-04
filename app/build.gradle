@@ -1,0 +1,139 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "com.tracking.m2comsys.adapplication"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 27
+        versionName "PTV20190110.1"
+        //PTV20190110.1
+        //RTC Integrated
+        //"PTV20241224.1"
+        //Time adjust zone
+        //Server update on daily and on completion
+        //Defined status properly
+        //Tested by adjusting days
+        //"PTV20181215.1-25
+        //Campaign deleted issue solved. It was trying to deletr uding _id instead of campaignID
+        //
+        //PTV20181204.1-24
+        //End date adjusted to make sure last date fall in the comparison rage
+        //Enddate is start of the day of current date. Current time can be more than that
+        //This cause last day failiure
+        //PTV20181203.1-23
+        //If reamaing impression zero campaign dletes
+        //If remaining days calculating mills goes -ve campaign closed
+        //PTV20181201.1-22
+        //Rem impression was adjusted by substarting numTimmes played by mistake
+        //Adjusted to just decrement
+        //PTV20181130.1 - 21
+        //Remaining impression was updates by total impression -Fixed that issue
+        //PTV20181130-20
+        //Slot checking avoided on default play
+        //PTV20181128-19
+        //Default play test
+        //PTV20181123 ver 18
+        //Date time adjustments
+        //PTV20181123 ver 17
+        //Daily updation of advt not worked because of sqlite db insertion issue
+        //this is solved by adding settranscation success
+        //changed update to replace by collectig value in to ContentValues
+        //PTV20181116 ver 16
+        //Relay switching in continius play is fixed
+        //PTV20181112-15
+        //Time diff adj with srver time
+        //Check slot:- if no slot settings found then use default device settings
+        //Improved date string parsing in check slot
+        //while updating slot in shared pref marked valid only if string is not null
+        //End date settings fixed
+        //Uncaught exception moved to new file
+        //PTV20181109-14
+        //Ip changed to domain name
+        //PTV20181024.0"
+        //Continious play implemented
+        //Resume advt download if brocken
+        //Application launch and activity duplication issues fixed
+        //PTV20181011.0
+        //Peek and normal slots implemented
+        //Exceptions handles
+        //PTV20180914.0-13
+        //Exception handled for USB
+        //USB exception raied when accessing empty buffer.
+        //added sysn in adding and accessing buffer
+        //ESP was not initilaizing due to an error in if statement
+        //versionName "PTV20180718.0"-12
+        //Added feature to RESET Campaign,RESTART app, Collect log ,Manual mode , Auto mode function
+        //fixed switching issues during sdcard mode
+        //Request send from web application as firebase message.
+        //versionName "PTV20170927.0"-11
+        //Changed internet connection check code fixed disable problem
+        //versionName "PTV20170926.0"-10
+        //Changed internet connection check code to detect wif con failiure
+        //added seprate wifi log
+        //versionName "PTV20170924.0"-9
+        //Wifi restart code modified step by step re-try included
+        //PTV20170922.0-8
+        //Alarm - app restart time increased
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        configurations.all {
+            resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+        exclude module: 'commons-logging'
+    }
+}
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
+
+
+dependencies {
+
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile files('libs/jxl.jar')
+    implementation files('libs/YouTubeAndroidPlayerApi-1.2.2/libs/YouTubeAndroidPlayerApi.jar')
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.google.apis:google-api-services-youtube:v3-rev183-1.22.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.google.firebase:firebase-messaging:11.4.2'
+    implementation 'com.google.firebase:firebase-auth:11.4.2'
+    implementation 'com.google.firebase:firebase-crash:11.4.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+    testImplementation 'junit:junit:4.12'
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/mail.jar')
+}

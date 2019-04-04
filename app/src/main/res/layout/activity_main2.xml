@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        tools:targetApi="lollipop" />
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtubeplayerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="696dp"
+            android:keepScreenOn="true" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:weightSum="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/publictv_ads_logo" />
+        <RelativeLayout
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:background="@color/gridviewHeader"
+                android:id="@+id/heading"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:text="VIDEO NAME"/>
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="IMPRESSIONS"/>
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="VIDEO PLAYED"/>
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="PERCENTAGE"/>
+            </LinearLayout>
+            <GridView
+                android:layout_below="@+id/heading"
+                android:id="@+id/gridview"
+                android:fastScrollAlwaysVisible="true"
+                android:fastScrollEnabled="true"
+                android:numColumns="1"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="5dp"
+                android:padding="1dp"
+                android:stretchMode="columnWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

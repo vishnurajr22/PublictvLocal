@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1098273172130",
+    "firebase_url": "https://ptvad-d646b.firebaseio.com",
+    "project_id": "ptvad-d646b",
+    "storage_bucket": "ptvad-d646b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098273172130:android:bebdbec67dc775d8",
+        "android_client_info": {
+          "package_name": "com.tracking.m2comsys.adapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098273172130-1l77g4pfva0b5n3ab1goh1naaqo7n8u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVVBi5Nr462z7_mYvCTrpPmwyticwqG94"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

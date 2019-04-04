@@ -1,0 +1,57 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+    <style name="Theme.Custom" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">false</item>
+        <!-- Support library compatibility -->
+        <item name="windowActionBarOverlay">false</item>
+    </style>
+    <style name="MyRedTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:shadowColor">@color/gridviewContents</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.7</item>
+        <item name="android:keyTextSize">22dp</item>
+    </style>
+    <style name="MyRedHeadAppearance" parent="@android:style/TextAppearance">
+        <item name="android:shadowColor">@color/gridviewHeader</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.7</item>
+        <item name="android:textColor">@color/white</item>
+
+        <item name="android:keyTextSize">25dp</item>
+    </style>
+</resources>

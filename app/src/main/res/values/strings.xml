@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AdApplication</string>
+    <string name="title_activity_usbchange">USBChange</string>
+    <string name="title_activity_usb_change">UsbChange</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_advertisement">Advertisement</string>
+
+</resources>

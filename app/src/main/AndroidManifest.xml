@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tracking.m2comsys.adapplication">
+
+
+
+    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
+
+
+
+
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.read_external_storage" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+
+
+
+
+
+
+
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="false" />
+
+    <application
+        android:name=".PtvApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ptv_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ptv_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <receiver android:name="com.tracking.m2comsys.adapplication.utils.RebootReceiver"  android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.tracking.m2comsys.adapplication.utils.AlarmReceiver" android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.tracking.m2comsys.adapplication.utils.AlarmReceiver" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name=".Activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+
+            android:taskAffinity="">
+
+        </activity>
+
+        <service android:name="com.tracking.m2comsys.adapplication.firebase.AdFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.tracking.m2comsys.adapplication.firebase.AdFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".Activity.SplashScreen"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
+                android:resource="@xml/accessory_filter" />
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_DETACHED"
+                android:resource="@xml/device_filter" />
+        </activity>
+        <activity
+            android:name=".Activity.Advertisement"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.SettingsActivity"></activity>
+        <service android:name=".extras.BackgroundService"/>
+        <service android:name=".BroadcastReceivers.BootService"/>
+
+        <receiver android:name=".extras.ReceiverAlarm" android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.tracking.m2comsys.adapplication.extras.ReceiverAlarm" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>Channel</item>
+        <item>YouTube</item>
+        <item>sdcard</item>
+        <item>YouTubeLive</item>
+
+
+    </string-array>
+</resources>

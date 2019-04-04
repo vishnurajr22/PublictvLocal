@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/channelDuration_popup"
+        android:title="Channel Duration"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/channelId_popup"
+        android:title="Video URL"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/noOfAds_popup"
+        android:title="No OF Advertisements"
+        app:showAsAction="never" />
+    <item android:id="@+id/mode"
+        android:title="Mode"></item>
+    <item android:id="@+id/uuid"
+        android:title="UUID"/>
+    <item android:id="@+id/remAds"
+        android:title="RemCurAdvts"/>
+    <item android:id="@+id/settings"
+        android:title="Settings"/>
+    <item android:id="@+id/showPLayHistory"
+        android:title="show play history"/>
+    <item android:id="@+id/exportPlayHist"
+        android:title="ExportPlayHist"/>
+
+    <item android:id="@+id/SetMailId"
+        android:title="Set Mail ID"/>
+</menu>

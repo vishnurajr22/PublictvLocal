@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:keepScreenOn="true"
+    tools:context="com.tracking.m2comsys.adapplication.Activity.MainActivity">
+
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        tools:targetApi="lollipop">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/wifitext"
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:text="Wifi connected to :"
+                android:textColor="@color/white" />
+            <TextView
+                android:layout_weight="0.5"
+                android:id="@+id/statusinfobox"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:text="PublicTV Info"
+                android:layout_below ="@+id/wifitext"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </Toolbar>
+
+
+    <LinearLayout
+        android:id="@+id/linearyoutubelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        >
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtubeplayerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_below="@+id/toolbar"
+            android:keepScreenOn="true" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"/>
+
+
+    </LinearLayout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/sdCardLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/toolbar"
+        android:background="@color/pure_black">
+        <!-- Video player -->
+        <VideoView
+            android:id="@+id/sdCardVideoView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"></VideoView>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/main_block"
+        android:layout_width="match_parent"
+        android:layout_height="510dp"
+        android:layout_below="@id/toolbar"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/img_logo"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:adjustViewBounds="true"
+            android:background="@drawable/publictv_ads_logo_splash"
+            android:scaleType="fitCenter"
+
+            ></ImageView>
+
+        <RelativeLayout
+            android:id="@+id/play_history_block"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/heading"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/gridviewHeader"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="VIDEO NAME"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="IMPRESSIONS"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="VIDEO PLAYED"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PERCENTAGE "
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=" STATUS "
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/MyRedHeadAppearance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=" ERRORCOUNT"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/heading"
+                android:fastScrollAlwaysVisible="true"
+                android:fastScrollEnabled="true"
+                android:horizontalSpacing="5dp"
+                android:numColumns="1"
+                android:padding="1dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="5dp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_contact_details"
+        android:background="@color/contact"
+
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="45dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_block" />
+</RelativeLayout>
