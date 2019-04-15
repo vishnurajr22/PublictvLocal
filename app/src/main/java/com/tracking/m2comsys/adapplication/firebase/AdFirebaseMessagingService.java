@@ -249,9 +249,11 @@ public class AdFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     class EmailThread extends Thread {
+
         String fileName;
         String emailId = sharedPreferences.getString(CommonDataArea.EmailId, "publictvstore@gmail.com");
-        String password = sharedPreferences.getString(CommonDataArea.PasswordEmail, "100$bill");
+        String password = sharedPreferences.getString(CommonDataArea.PasswordEmail, "Passwd811#");
+
 
         EmailThread(String fileName) {
             this.fileName = fileName;

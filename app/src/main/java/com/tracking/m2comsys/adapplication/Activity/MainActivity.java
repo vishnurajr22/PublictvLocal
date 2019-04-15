@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.provider.Browser;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -1761,6 +1760,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
                     String pattern = "dd/MM/yyyy HH:mm:ss";
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                     rtcDate = simpleDateFormat.parse(timeStr);
+
                 } catch (ParseException exp) {
                     LogWriter.writeLogRTC("RTCTimeFormatErr", "Failed to Parse 24H Mode");
                     parseError = false;

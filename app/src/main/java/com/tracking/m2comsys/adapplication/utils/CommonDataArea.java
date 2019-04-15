@@ -4,14 +4,11 @@ import android.content.Context;
 
 import com.tracking.m2comsys.adapplication.Activity.MainActivity;
 import com.tracking.m2comsys.adapplication.Database.DataBaseHelper;
-
 import com.tracking.m2comsys.adapplication.usb.UsbControllerESP;
 import com.tracking.m2comsys.adapplication.usb.UsbControllerFTDI;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Timer;
 
 
@@ -20,6 +17,7 @@ import java.util.Timer;
  */
 
 public class CommonDataArea {
+    public static  Date GoogleTime ;
     public static Thread downloadFiles;
     public static String uuid;
     public static MainActivity mainActivity;
@@ -36,6 +34,7 @@ public class CommonDataArea {
     public static long updateStatusDelay=0;
     public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "AdvertisementDetails";
+    public static String gdate;
     private static int alredyStarted=0;
     public static final String Video_Id = "_id";
     public static final String Video_Name = "Name";
