@@ -20,6 +20,7 @@ import com.tracking.m2comsys.adapplication.Activity.Advertisement;
 import com.tracking.m2comsys.adapplication.Activity.MainActivity;
 import com.tracking.m2comsys.adapplication.Database.DataBaseHelper;
 import com.tracking.m2comsys.adapplication.data.model.FirebaseModel;
+import com.tracking.m2comsys.adapplication.extras.Config;
 import com.tracking.m2comsys.adapplication.extras.GMailSender;
 import com.tracking.m2comsys.adapplication.utils.CommonDataArea;
 import com.tracking.m2comsys.adapplication.utils.CommonFunctionArea;
@@ -251,8 +252,8 @@ public class AdFirebaseMessagingService extends FirebaseMessagingService {
     class EmailThread extends Thread {
 
         String fileName;
-        String emailId = sharedPreferences.getString(CommonDataArea.EmailId, "publictvstore@gmail.com");
-        String password = sharedPreferences.getString(CommonDataArea.PasswordEmail, "Passwd811#");
+        String emailId = sharedPreferences.getString(CommonDataArea.EmailId, Config.EMAIL);
+        String password = sharedPreferences.getString(CommonDataArea.PasswordEmail, Config.PASSWORD);
 
 
         EmailThread(String fileName) {
@@ -276,7 +277,7 @@ public class AdFirebaseMessagingService extends FirebaseMessagingService {
 
                         emailId,
 
-                        emailId);
+                        Config.EMAIL);
 
             } catch (Exception e) {
 

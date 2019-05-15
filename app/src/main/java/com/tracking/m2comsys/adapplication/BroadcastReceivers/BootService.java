@@ -12,10 +12,13 @@ import android.util.Log;
 
 import com.tracking.m2comsys.adapplication.Database.DataBaseHelper;
 import com.tracking.m2comsys.adapplication.extras.SendMail;
+import com.tracking.m2comsys.adapplication.utils.CommonDataArea;
+import com.tracking.m2comsys.adapplication.utils.GoogleTime;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -28,7 +31,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-public class BootService extends Service {
+public class BootService extends Service implements Google {
     String pdate;
     SharedPreferences sharedpreferences;
     static int i = 0;
@@ -37,6 +40,9 @@ public class BootService extends Service {
     WritableSheet sheet;
     public String sheetTitle = "";
     public static int count = 0;
+    DataBaseHelper dataBaseHelper;
+    ArrayList<String> udate;
+    Boolean sent = false;
 
     @Nullable
     @Override
@@ -46,6 +52,7 @@ public class BootService extends Service {
 
     @Override
     public void onCreate() {
+
         super.onCreate();
         Log.d("BootCompletedsuccess", "gdfgdfggfgfgsgsdgfgg");
         // Toast.makeText(this, "BootCompleted", Toast.LENGTH_SHORT).show();
@@ -55,6 +62,19 @@ public class BootService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        GoogleTime time = new GoogleTime(BootService.this);
+
+        final Thread t1 = new Thread(time);
+        t1.start();
+
+
+//        stopSelf();
+        return START_STICKY;
+    }
+
+    public void mailservice() {
+        File f = new File(Environment.getExternalStorageDirectory().toString() + "/EMAIL" + "/CheckEmail.xls");
+        Boolean del = f.delete();
         File sd = new File(Environment.getExternalStorageDirectory().toString() + "/EMAIL");
         String csvFile = "CheckEmail.xls";
 
@@ -70,10 +90,11 @@ public class BootService extends Service {
             workbook = Workbook.createWorkbook(file, wbSettings);
 
             WritableSheet sheet2 = workbook.createSheet("CurrentStatus", j + 1);
-            DataBaseHelper dataBaseHelper = new DataBaseHelper(this);
+            dataBaseHelper = new DataBaseHelper(this);
             DataBaseHelper dataBaseHelper2 = new DataBaseHelper(this);
+
             Cursor cursor = dataBaseHelper.CheckEmail();
-            Cursor cursor1 = dataBaseHelper.CheckAdvt();
+            Cursor cursor1 = dataBaseHelper2.CheckAdvt();
 
             if ((cursor != null) && (cursor.getCount() > 0)) {
 
@@ -98,6 +119,8 @@ public class BootService extends Service {
                         calendar.setTimeInMillis(PlayedTimeMills);
                         String hms = formatter.format(calendar.getTime()).substring(10);
                         PlayedDate = cursor.getString(3);
+                        udate = new ArrayList<String>();
+                        udate.add(PlayedDate);
                         String VideoIDServ = cursor.getString(4);
                         String CampaignID = String.valueOf(cursor.getInt(5));
                         String TotalNumImpression = String.valueOf(cursor.getInt(6));
@@ -146,6 +169,7 @@ public class BootService extends Service {
                 if ((cursor1 != null) && (cursor1.getCount() > 0)) {
 
                     if (cursor1.moveToFirst()) {
+                        sent = true;
                         do {
                             String vidnam = cursor1.getString(10);
                             String dailyimpression = String.valueOf(cursor1.getInt(4));
@@ -173,6 +197,7 @@ public class BootService extends Service {
 
                     }
                 } else {
+
                     Log.d("N2_", "nodata2");
 
                 }
@@ -181,13 +206,19 @@ public class BootService extends Service {
                 workbook.write();
                 workbook.close();
                 dataBaseHelper.close();
-                dataBaseHelper2.close();
-                dataBaseHelper2.updateData(sheetTitle);
+//                dataBaseHelper2.close();
+
                 sharedpreferences = getSharedPreferences("mypreference",
                         Context.MODE_PRIVATE);
                 SendMail sm = new SendMail(this, sharedpreferences.getString("Email", ""), "subject", "message", Environment.getExternalStorageDirectory().toString() + "/EMAIL" + "/CheckEmail.xls");
                 sm.execute();
+
+
+                for(String s:udate)
+                dataBaseHelper.updateData(s);
+                udate.clear();
             } else {
+                sent = false;
                 Log.d("N_", "nodata");
 
             }
@@ -204,10 +235,14 @@ public class BootService extends Service {
         } catch (WriteException e) {
             e.printStackTrace();
         }
-
-        stopSelf();
-        return START_STICKY;
     }
 
 
+    @Override
+    public String google(Date date) {
+
+        if(date!=null)
+        mailservice();
+        return String.valueOf(date);
+    }
 }

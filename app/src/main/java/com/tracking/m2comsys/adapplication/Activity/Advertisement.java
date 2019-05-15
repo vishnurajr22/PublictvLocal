@@ -140,10 +140,10 @@ public class Advertisement extends AppCompatActivity {
                 if ((impressions > 0) && (noOfTimesPlayed > 0)) {
                     percentPlayed = (float) (((float) noOfTimesPlayed / (float) impressions) * (float) 100);
                 }
-                dataBaseHelper.insertAdvtPlayHistEntry(Advertisement.this,videoName,map_id,videoId,totalImpression,rem_imp,noOfTimesPlayed,percentPlayed);
+                dataBaseHelper.insertAdvtPlayHistEntry(Advertisement.this, videoName, map_id, videoId, totalImpression, rem_imp, noOfTimesPlayed, percentPlayed);
                 Log.d("databasevalues", "id " + String.valueOf(_id) + " , impressions " + String.valueOf(impressions) + " lastPlayed " + lastPlayed + ", nooftimesPlayed " + String.valueOf(noOfTimesPlayed) + " playErrorCount " + String.valueOf(playErrorCount));
                 Utils.sendLogToServer("Play completed Vid->" + videoId + " Played " + (advtBatch + 1) + " advertisement out of " + noOfAdPlay + " in the batch. No of times played today->" + noOfTimesPlayed + " Total impression for today->" + impressions, Advertisement.this);
-                LogWriter.writeDailyPlayLog("Play completed","Vid->" + videoId + " Played " + (advtBatch + 1) + " advertisement out of " + noOfAdPlay + " in the batch. No of times played today->" + noOfTimesPlayed + " Total impression for today->" + impressions+"Total Impression->"+ totalImpression + "Total Remaining->"+rem_imp);
+                LogWriter.writeDailyPlayLog("Play completed", "Vid->" + videoId + " Played " + (advtBatch + 1) + " advertisement out of " + noOfAdPlay + " in the batch. No of times played today->" + noOfTimesPlayed + " Total impression for today->" + impressions + "Total Impression->" + totalImpression + "Total Remaining->" + rem_imp);
                 LogWriter.writeLogActivity("AdvertisementActivity", "number of advertisement during an interval->" + advtBatch + " Play completed Vid->" + videoId + "no of times played today->" + noOfTimesPlayed + " total impression for today ->" + impressions + "  mapid  " + String.valueOf(map_id));
                 if (++advtBatch >= noOfAdPlay) {
                     advtBatch = 0;
@@ -254,8 +254,8 @@ public class Advertisement extends AppCompatActivity {
                 return false;
             }
             if (cursor.moveToFirst()) {
-                Log.d("cursorVslue","cursorCount "+cursor.getCount());
-                Log.d("cursorVslue","video name "+cursor.getString(cursor.getColumnIndex(Video_Name)));
+                Log.d("cursorVslue", "cursorCount " + cursor.getCount());
+                Log.d("cursorVslue", "video name " + cursor.getString(cursor.getColumnIndex(Video_Name)));
 
                 _id = cursor.getInt(cursor.getColumnIndex("_id"));
                 rem_imp = cursor.getInt(cursor.getColumnIndex("Remaining_Impressions"));
@@ -280,7 +280,7 @@ public class Advertisement extends AppCompatActivity {
                     lastPlayPos = 0;
                     curPos = 0;
                     LogWriter.writeLogActivity("AdvertisementActivity", "Playing video");
-                    LogWriter.writeDailyPlayLog("Play->PLaying Video:",videoName);
+                    LogWriter.writeDailyPlayLog("Play->PLaying Video:", videoName);
                     Utils.sendLogToServer("Play->PLaying Video:" + videoName, Advertisement.this);
                     return true;
                 } else {
@@ -288,7 +288,7 @@ public class Advertisement extends AppCompatActivity {
                     LogWriter.writeLogActivity("AdvertisementActivity", "Play error video not exist");
                     dataBaseHelper.updateTable(_id, impressions, lastPlayed, noOfTimesPlayed, playErrorCount, rem_imp);
                     Utils.sendLogToServer("Play->Error  video not exist :" + videoName, Advertisement.this);
-                    LogWriter.writeDailyPlayLog("Play->Error  video not exist :",videoName);
+                    LogWriter.writeDailyPlayLog("Play->Error  video not exist :", videoName);
                 }
             }
             return false;
@@ -347,7 +347,7 @@ public class Advertisement extends AppCompatActivity {
             int vidLen = videoView.getDuration();
             if (vidLen > 0)
                 percent = ((float) curPos / (float) vidLen) * 100;
-           // Utils.sendLogToServer("Play->Play monitor :" + videoName + " Percent :" + percent, Advertisement.this);
+            // Utils.sendLogToServer("Play->Play monitor :" + videoName + " Percent :" + percent, Advertisement.this);
             if (curPos != lastPlayPos) {
                 lastPlayPos = curPos;
                 notChangedCount = 0;

@@ -87,7 +87,9 @@ public class Utils {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnected()) {
             return true;
-        } else return false;
+        } else
+            return false;
+
     }
 
     public static long getAvailableSpace() {
@@ -420,13 +422,15 @@ public class Utils {
         editor.commit();
     }
 
+    /*rtctime check*/
     public static long getAdjustedTimeMills(Context con) {
         try {
             long currentNormal = 0;
             long adjustedDevTimeMills = 0;
 
             if (CommonDataArea.timeStatus == CommonDataArea.TIMESTATUS_USEDEVICE_TIME) {
-                adjustedDevTimeMills = System.currentTimeMillis();
+                //adjustedDevTimeMills = System.currentTimeMillis();
+                adjustedDevTimeMills = new Date().getTime();
             }
             if (CommonDataArea.timeStatus == CommonDataArea.TIMESTATUS_USESERVER_TIME) {
 
@@ -607,7 +611,6 @@ public class Utils {
             public void run() {
 
 
-
 //                    try {
 //                        HttpClient httpclient = new DefaultHttpClient();
 //                        HttpResponse response = httpclient.execute(new HttpGet("https://google.com/"));
@@ -634,7 +637,7 @@ public class Utils {
 //                    }
 
 
-    try {
+                try {
                     String urlServer = serverURL + "getTime.php?did=" + CommonDataArea.uuid;
                     URL uRl = new URL(urlServer);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) uRl.openConnection();
@@ -712,29 +715,31 @@ public class Utils {
     //and make decision how to play
     public static void adjustPlayMethod(Context context) {
         try {
+            if (internetCheck()) {
+                GoogleTime time = new GoogleTime();
+                final Thread t1 = new Thread(time);
+                t1.start();
+                t1.join();
+
+            }
 
 
-         GoogleTime time=new GoogleTime();
-           final Thread t1=new Thread(time);
-            t1.start();
-            t1.join();
-            if(CommonDataArea.rtcTime!=null){
+            if (CommonDataArea.rtcTime != null) {
+                Log.d("timeused>>", "rtc_time");
                 CommonDataArea.timeStatus = CommonDataArea.TIMESTATUS_RTC_TIME;
                 LogWriter.writeLogPlayMethod("Playmethod", "TIMESTATUS_RTC_TIME");
                 CommonDataArea.curSysStatus_Playmethod = "TIMESTATUS_RTC_TIME";
-            }
-            else if(CommonDataArea.rtcTime==null && CommonDataArea.GoogleTime!=null){
+            } else if (CommonDataArea.GoogleTime != null) {
+                Log.d("timeused>>", "google_time");
                 CommonDataArea.timeStatus = CommonDataArea.TIMESTATUS_USESERVER_TIME;
                 LogWriter.writeLogPlayMethod("Playmethod", "TIMESTATUS_USESERVER_TIME");
-                CommonDataArea.curSysStatus_Playmethod ="TIMESTATUS_USESERVER_TIME";
-            }
-            else{
+                CommonDataArea.curSysStatus_Playmethod = "TIMESTATUS_USESERVER_TIME";
+            } else {
+                Log.d("timeused>>", "System_time");
                 CommonDataArea.timeStatus = CommonDataArea.TIMESTATUS_USEDEVICE_TIME;
                 LogWriter.writeLogPlayMethod("Playmethod", "TIMESTATUS_USEDEVICE_TIME");
-                CommonDataArea.curSysStatus_Playmethod ="TIMESTATUS_USEDEVICE_TIME";
+                CommonDataArea.curSysStatus_Playmethod = "TIMESTATUS_USEDEVICE_TIME";
             }
-
-
 
 
 //            long serverTime = getSavedServerTime(context);
@@ -786,7 +791,7 @@ public class Utils {
 
     public static long getSavedServerTime(Context context) {
         //  noAds = Integer.parseInt((dataStr.substring(17, dataStr.length())).trim());
-      //  if (!serverTimeFeched) return 0; //server time not fetched after starting
+        //  if (!serverTimeFeched) return 0; //server time not fetched after starting
         sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
         return sharedPreferences.getLong(CommonDataArea.storedTime, CommonDataArea.startOf2019Mills);
     }
@@ -827,4 +832,11 @@ public class Utils {
 
 
     }
-}
+    public static void setChannelDurationw(Context context, int data) {
+
+        // channelDuration = Integer.parseInt((data.substring(15, data.length())).trim());
+        sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(chnlDrtn, data);
+        editor.commit();
+}}

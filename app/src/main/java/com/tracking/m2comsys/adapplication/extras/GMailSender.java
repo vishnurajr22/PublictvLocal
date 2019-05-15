@@ -1,5 +1,9 @@
 package com.tracking.m2comsys.adapplication.extras;
 
+import android.util.Log;
+
+import com.tracking.m2comsys.adapplication.utils.CommonDataArea;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -120,7 +124,7 @@ public class GMailSender extends javax.mail.Authenticator {
             Transport.send(message);
 
         } catch (Exception e) {
-
+Log.d("e",e.getMessage());
         }
 
     }
@@ -133,7 +137,7 @@ public class GMailSender extends javax.mail.Authenticator {
 
         messageBodyPart.setDataHandler(new DataHandler(source));
 
-        messageBodyPart.setFileName("download image");
+        messageBodyPart.setFileName("Devide uuid>>"+CommonDataArea.uuid);
 
         _multipart.addBodyPart(messageBodyPart);
 

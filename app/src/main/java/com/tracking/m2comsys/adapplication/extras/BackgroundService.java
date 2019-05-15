@@ -11,7 +11,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+
+import com.tracking.m2comsys.adapplication.BroadcastReceivers.Google;
 import com.tracking.m2comsys.adapplication.Database.DataBaseHelper;
+import com.tracking.m2comsys.adapplication.utils.GoogleTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +31,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-public class BackgroundService extends Service {
+public class BackgroundService extends Service implements Google {
     SharedPreferences sharedpreferences;
 
 
@@ -49,10 +52,28 @@ public class BackgroundService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Toast.makeText(this,"service started",Toast.LENGTH_SHORT).show();
+
+        GoogleTime time = new GoogleTime(this);
+
+        final Thread t1 = new Thread(time);
+        t1.start();
+
+        //stopSelf();
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Toast.makeText(this,"service distroyed",Toast.LENGTH_SHORT).show();
+    }
+    public void sentmail(){
+        File f = new File(Environment.getExternalStorageDirectory().toString() + "/EMAIL" + "/Email.xls");
+        Boolean del = f.delete();
         Date date = new Date();
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        File sd = new File(Environment.getExternalStorageDirectory().toString());
+        File sd = new File(Environment.getExternalStorageDirectory().toString()+"/EMAIL");
         String csvFile = "Email.xls";
         File directory = new File(sd.getAbsolutePath());
         if (!directory.isDirectory()) {
@@ -170,7 +191,7 @@ public class BackgroundService extends Service {
                 Log.d("date", format.format(date));
                 sharedpreferences = getSharedPreferences("mypreference",
                         Context.MODE_PRIVATE);
-                SendMail sm = new SendMail(this, sharedpreferences.getString("Email", ""), "subject", "message", Environment.getExternalStorageDirectory().toString() + "/Email.xls");
+                SendMail sm = new SendMail(this, sharedpreferences.getString("Email", ""), "subject", "message", Environment.getExternalStorageDirectory().toString() + "/EMAIL" + "/Email.xls");
                 sm.execute();
 
             } else {
@@ -186,15 +207,12 @@ public class BackgroundService extends Service {
         } catch (WriteException e) {
             e.printStackTrace();
         }
-
-
-        stopSelf();
-        return START_STICKY;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Toast.makeText(this,"service distroyed",Toast.LENGTH_SHORT).show();
+    public String google(Date date) {
+        if(date!=null)
+            sentmail();
+        return null;
     }
 }

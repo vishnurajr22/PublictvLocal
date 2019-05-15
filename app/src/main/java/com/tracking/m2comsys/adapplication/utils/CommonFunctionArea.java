@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -12,6 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tracking.m2comsys.adapplication.Activity.SplashScreen;
+import com.tracking.m2comsys.adapplication.extras.Config;
+import com.tracking.m2comsys.adapplication.extras.GMailSender;
+
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.tracking.m2comsys.adapplication.Activity.MainActivity.ModeOfPlay;
@@ -218,5 +224,36 @@ public class CommonFunctionArea {
         //toastShow("Channel duration set to" + channelDuration);
 
 
+    }
+   public class EmailThread extends AsyncTask<ArrayList<String>, Void, Void> {
+        SharedPreferences sharedpreferences;
+        @Override
+        protected Void doInBackground(ArrayList<String>... arrayLists) {
+
+            try {
+                ArrayList<String> camp = arrayLists[0];
+                String Path = camp.get(0);
+                GMailSender sender = new GMailSender(
+
+                        Config.EMAIL,
+
+                        Config.PASSWORD);
+
+
+                sender.addAttachment(Environment.getExternalStorageDirectory().toString()+"/EMAIL"+"/"+Path);
+
+                sender.sendMail("Daily Report", "This mail includes daily report",
+
+                        Config.EMAIL,
+
+                        Config.EMAIL);
+//                Toast.makeText(getApplicationContext(), "sent", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Log.e("error", String.valueOf(e));
+                //Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+            }
+
+            return null;
+        }
     }
 }

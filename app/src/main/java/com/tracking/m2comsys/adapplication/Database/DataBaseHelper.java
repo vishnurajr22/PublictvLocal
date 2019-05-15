@@ -60,10 +60,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String Video_DriveId = "DriveId";
     public static final String Video_Server_Id = "VideoServerId";
     public static final String VideoStatus = "VideoStatus"; //ready - Ready to play ,
-                                                            // completed_pend - Completed daily impression server update may pending,
-                                                            // completed_completed - Updated to servr
-                                                            // closed-pend - Campaign finished, server update pending
-                                                            // closed-completed - Completed and updated in server,ready to delete
+    // completed_pend - Completed daily impression server update may pending,
+    // completed_completed - Updated to servr
+    // closed-pend - Campaign finished, server update pending
+    // closed-completed - Completed and updated in server,ready to delete
     public static final String EndDate = "EndDate";
     public static final String TotalImpression = "TotalImpression";
     public static final String StatusOfDays = "StatusofDays";
@@ -90,11 +90,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String PlayedDate = "PlayedDate";
     public static final String VideoIDServ = "VideoIDServ";
     public static final String CampaignID = "CampaignID";
-    public static final String TotalNumImpression  = "TotalImpression";
-    public static final String RemainingImpression  = "RemImpression";
-    public static final String TodaysImpression  = "TodaysImpression";
-    public static final String PlayedToday  = "PlayedToday";
-    public static final String PercentPlayed  = "PercentPlayed";
+    public static final String TotalNumImpression = "TotalImpression";
+    public static final String RemainingImpression = "RemImpression";
+    public static final String TodaysImpression = "TodaysImpression";
+    public static final String PlayedToday = "PlayedToday";
+    public static final String PercentPlayed = "PercentPlayed";
 
     public static final String SENT_EMAIL = "sent_mail";
     public static final String VideoName2 = "VideoName2";
@@ -102,13 +102,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String PlayedDate2 = "PlayedDate2";
     public static final String VideoIDServ2 = "VideoIDServ2";
     public static final String CampaignID2 = "CampaignID2";
-    public static final String TotalNumImpression2  = "TotalImpression2";
-    public static final String RemainingImpression2  = "RemImpression2";
-    public static final String TodaysImpression2  = "TodaysImpression2";
-    public static final String PlayedToday2  = "PlayedToday2";
-    public static final String PercentPlayed2  = "PercentPlayed2";
-    public static final String EmailStatus2  = "EmailStatus";
-
+    public static final String TotalNumImpression2 = "TotalImpression2";
+    public static final String RemainingImpression2 = "RemImpression2";
+    public static final String TodaysImpression2 = "TodaysImpression2";
+    public static final String PlayedToday2 = "PlayedToday2";
+    public static final String PercentPlayed2 = "PercentPlayed2";
+    public static final String EmailStatus2 = "EmailStatus";
+    SQLiteDatabase sqLiteDatabase;
 
     private SQLiteDatabase database;
     Context context;
@@ -119,9 +119,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + " TEXT" + " )";
     private static final String CREATE_DEVICE_SETTINGS = "CREATE TABLE " + DEVICE_SETTINGS + "(" + _Id + " INTEGER PRIMARY KEY ," + Device_id + " INTEGER ," + Settings_id + " INTEGER," + Settings_Version + " INTEGER," + PlayBatch + " INTEGER," + FillerPLayGAp + " INTEGER," + DefaultStartTime + " INTEGER," + DefaultEndTime + " INTEGER," + DeleteAll + " INTEGER," + Advt_PlayTme + " DOUBLE" + ")";
     private static final String CREATE_SHOW_TIME_LIST = "CREATE TABLE " + SHOW_TIME_LIST + "(" + _Id + " INTEGER," + Setting_Name + " TEXT," + Type + " INTEGER," + Device_id + " TEXT," + StartTime + " REAL," + End_Time + " REAL," + PlayBatch + " INTEGER," + FillerPLayGAp + " INTEGER," + " FOREIGN KEY (" + _Id + ") REFERENCES " + DEVICE_SETTINGS + "(" + _Id + ")" + ")";
-    private static final String CREATE_PLAY_HIST_LIST = "CREATE TABLE " + HIST_PLAY_LIST + "(" + _Id + " INTEGER PRIMARY KEY AUTOINCREMENT," + VideoName + " TEXT," + PlayedTimeMills + " INTEGER," + PlayedDate + " TEXT," + VideoIDServ + " TEXT," + CampaignID + " INTEGER,"+ TotalNumImpression + " INTEGER,"+ RemainingImpression +" INTEGER," + TodaysImpression +" INTEGER," + PlayedToday +" INTEGER,"+ PercentPlayed+" REAL DEFAULT 0.0 )";
-    private static final String CREATE_EMAIL = "CREATE TABLE " + SENT_EMAIL + "(" + _Id + " INTEGER PRIMARY KEY AUTOINCREMENT," + VideoName2 + " TEXT," + PlayedTimeMills2 + " INTEGER," + PlayedDate2 + " TEXT," + VideoIDServ2 + " TEXT," + CampaignID2 + " INTEGER,"+ TotalNumImpression2 + " INTEGER,"+ RemainingImpression2 +" INTEGER," + TodaysImpression2 +" INTEGER," + PlayedToday2 +" INTEGER,"+ EmailStatus2+" INTEGER DEFAULT 0)";
-
+    private static final String CREATE_PLAY_HIST_LIST = "CREATE TABLE " + HIST_PLAY_LIST + "(" + _Id + " INTEGER PRIMARY KEY AUTOINCREMENT," + VideoName + " TEXT," + PlayedTimeMills + " INTEGER," + PlayedDate + " TEXT," + VideoIDServ + " TEXT," + CampaignID + " INTEGER," + TotalNumImpression + " INTEGER," + RemainingImpression + " INTEGER," + TodaysImpression + " INTEGER," + PlayedToday + " INTEGER," + PercentPlayed + " REAL DEFAULT 0.0 )";
+    private static final String CREATE_EMAIL = "CREATE TABLE " + SENT_EMAIL + "(" + _Id + " INTEGER PRIMARY KEY AUTOINCREMENT," + VideoName2 + " TEXT," + PlayedTimeMills2 + " INTEGER," + PlayedDate2 + " TEXT," + VideoIDServ2 + " TEXT," + CampaignID2 + " INTEGER," + TotalNumImpression2 + " INTEGER," + RemainingImpression2 + " INTEGER," + TodaysImpression2 + " INTEGER," + PlayedToday2 + " INTEGER," + EmailStatus2 + " INTEGER DEFAULT 0)";
 
 
     public DataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -133,6 +132,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
+
 
     }
 
@@ -149,16 +149,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
-           // db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_FILE_LIST);
-           // db.execSQL("DROP TABLE IF EXISTS " + CREATE_DEVICE_SETTINGS);
-          //  db.execSQL("DROP TABLE IF EXISTS " + CREATE_SHOW_TIME_LIST);
+            // db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_FILE_LIST);
+            // db.execSQL("DROP TABLE IF EXISTS " + CREATE_DEVICE_SETTINGS);
+            //  db.execSQL("DROP TABLE IF EXISTS " + CREATE_SHOW_TIME_LIST);
             if ((oldVersion == 1) && (newVersion > 1)) {
                 db.execSQL(CREATE_PLAY_HIST_LIST);
                 db.execSQL(CREATE_EMAIL);
             }
             onCreate(db);
-        }catch(Exception exp){
-            LogWriter.writeLogException("Update",exp);
+        } catch (Exception exp) {
+            LogWriter.writeLogException("Update", exp);
         }
 
     }
@@ -186,8 +186,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(Rem_imp, videoDetailsModel.getRemImpressions());
         values.put(StatusOfDays, videoDetailsModel.getStatusOfDays());
         values.put(Video_LastPlayed, videoDetailsModel.getVideo_LastPlayed());
-      //  if (videoDetailsModel.getStatus() == "1")
-            values.put(VideoStatus, "ready");
+        //  if (videoDetailsModel.getStatus() == "1")
+        values.put(VideoStatus, "ready");
         values.put(Video_NoOfTimesPlayed, videoDetailsModel.getVideo_NoOfTimesPlayed());
         values.put(Video_PlayedPercent, 0.0);
 
@@ -198,7 +198,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public long insertAdvtPlayHistEntry( Context con,String videoName,int campaignID,int videoServID,int totalImp,int remImp,int numPlayed, float percent) {
+    public long insertAdvtPlayHistEntry(Context con, String videoName, int campaignID, int videoServID, int totalImp, int remImp, int numPlayed, float percent) {
         try {
             long id;
             if (database != null) database.close();
@@ -227,14 +227,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values2.put(TotalNumImpression2, totalImp);
             values2.put(RemainingImpression2, remImp);
             values2.put(PlayedToday2, numPlayed);
-            values2.put(EmailStatus2,0);
+            values2.put(EmailStatus2, 0);
 
             id = database.insert(HIST_PLAY_LIST, null, values);
             database.insert(SENT_EMAIL, null, values2);
             database.close();
 
             return id;
-        }catch(Exception exp){
+        } catch (Exception exp) {
             return -1;
         }
     }
@@ -247,47 +247,48 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return status;
     }
 
-    public boolean closeByRowId(int id,ContentValues cv) {
+    public boolean closeByRowId(int id, ContentValues cv) {
         SQLiteDatabase database = this.getWritableDatabase();
-        LogWriter.writeLogDailyPlayAlloc("Cloded-pend","Marking closed-pend for ->"+id);
-        cv.put(VideoStatus,"closed-pend");
-        boolean status = database.update(Advertisement_List, cv,_Id + "=" + id,null)>0;
+        LogWriter.writeLogDailyPlayAlloc("Cloded-pend", "Marking closed-pend for ->" + id);
+        cv.put(VideoStatus, "closed-pend");
+        boolean status = database.update(Advertisement_List, cv, _Id + "=" + id, null) > 0;
         database.close();
 
         return status;
     }
 
-    public boolean closeAfterUpdate(int _idVal){
+    public boolean closeAfterUpdate(int _idVal) {
         ContentValues cv = new ContentValues();
-        LogWriter.writeLogDailyPlayAlloc("closed-complete","Marking closed-completed for ->"+_idVal);
+        LogWriter.writeLogDailyPlayAlloc("closed-complete", "Marking closed-completed for ->" + _idVal);
         cv.put(VideoStatus, "closed-completed");
         SQLiteDatabase database = this.getWritableDatabase();
-        int affecteRows= database.update(Advertisement_List, cv,_Id + "=" + _idVal,null);
-        LogWriter.writeLogDailyPlayAlloc("closed-complete","Marking closed-completed affected rows->"+affecteRows);
+        int affecteRows = database.update(Advertisement_List, cv, _Id + "=" + _idVal, null);
+        LogWriter.writeLogDailyPlayAlloc("closed-complete", "Marking closed-completed affected rows->" + affecteRows);
         database.close();
-        return affecteRows>0;
+        return affecteRows > 0;
     }
 
-    public boolean setStatusDayNA(){
+    public boolean setStatusDayNA() {
         ContentValues cv = new ContentValues();
 
         cv.put(StatusOfDays, "NA");
         SQLiteDatabase database = this.getWritableDatabase();
-        boolean status = database.update(Advertisement_List, cv,_Id + "> 0" ,null)>0;
+        boolean status = database.update(Advertisement_List, cv, _Id + "> 0", null) > 0;
         database.close();
         return status;
     }
 
-    public boolean completeAfterUpdate(int _idVal){
+    public boolean completeAfterUpdate(int _idVal) {
         ContentValues cv = new ContentValues();
-        LogWriter.writeLogDailyPlayAlloc("Complted-complete","Marking Complted-complete for ->"+_idVal);
+        LogWriter.writeLogDailyPlayAlloc("Complted-complete", "Marking Complted-complete for ->" + _idVal);
         cv.put(VideoStatus, "completed_completed");
         SQLiteDatabase database = this.getWritableDatabase();
-        int numRec  = database.update(Advertisement_List, cv,_Id + "=" + _idVal,null);
-        LogWriter.writeLogDailyPlayAlloc("Complted-complete","Marking Complted-complete affected rows"+numRec);
+        int numRec = database.update(Advertisement_List, cv, _Id + "=" + _idVal, null);
+        LogWriter.writeLogDailyPlayAlloc("Complted-complete", "Marking Complted-complete affected rows" + numRec);
         database.close();
-        return numRec>0;
+        return numRec > 0;
     }
+
     //todo BMJO excluded deleted
     public Cursor checkDailyImpression(long adjustedTimeMills) {
         try {
@@ -308,7 +309,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             } catch (Exception exp) {
                 return null;
             }
-        }catch(Exception exp){
+        } catch (Exception exp) {
             return null;
         }
     }
@@ -358,7 +359,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAdvtsReport() {
         try {
-            String selectQuery = "SELECT  * FROM " + Advertisement_List+ " where " + VideoStatus +" not like 'closed%'";
+            String selectQuery = "SELECT  * FROM " + Advertisement_List + " where " + VideoStatus + " not like 'closed%'";
             //    if (database != null) database.close();
             database = this.getReadableDatabase();
             Cursor cursor = database.rawQuery(selectQuery, null);
@@ -483,7 +484,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = sdf.format(date);
-        String selectRecordQuery = "SELECT  * FROM " + HIST_PLAY_LIST ;//+ " where VideoStatus not like 'closed%' and PlayErrorCount<5 and PercentPlayed <100 ORDER by PercentPlayed ASC";
+        String selectRecordQuery = "SELECT  * FROM " + HIST_PLAY_LIST;//+ " where VideoStatus not like 'closed%' and PlayErrorCount<5 and PercentPlayed <100 ORDER by PercentPlayed ASC";
         //   String selectRecordQuery = "SELECT  * FROM " + Advertisement_List;// + " WHERE _id = " + id ;//+" AND "+ Video_DwlDate+" like '%"+dateString+"%'";
         if ((database != null) && (database.isOpen())) database.close();
         database = this.getReadableDatabase();
@@ -506,7 +507,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void logPlayHistory() {
         try {
             int row = 0;
-            String fileData="";
+            String fileData = "";
             String selectRecordQuery = "SELECT  * FROM " + HIST_PLAY_LIST;//+ " where VideoStatus like 'ready%' and PlayErrorCount<5 and PercentPlayed <100 ORDER by PercentPlayed ASC";
             if ((database != null) && (database.isOpen())) database.close();
             database = this.getReadableDatabase();
@@ -514,24 +515,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             int columns = cursor.getColumnCount();
             for (int i = 0; i < columns; ++i) {
 
-                fileData+= ("\"" + cursor.getColumnName(i) + "\"," );
+                fileData += ("\"" + cursor.getColumnName(i) + "\",");
 
             }
-            fileData+="\r\n";
+            fileData += "\r\n";
             LogWriter.writeCSV(fileData);
             cursor.moveToFirst();
-            if(cursor.getCount()>0) {
+            if (cursor.getCount() > 0) {
                 do {
                     for (int i = 0; i < columns; ++i) {
-                        if(i>0)fileData+=",";
-                        fileData+=  ("\""+cursor.getString(i)+"\"");
+                        if (i > 0) fileData += ",";
+                        fileData += ("\"" + cursor.getString(i) + "\"");
                     }
-                    fileData+="\r\n";
+                    fileData += "\r\n";
                     LogWriter.writeCSV(fileData);
                 } while (cursor.moveToNext());
             }
-        }catch(Exception exp){
-            LogWriter.writeLogException("Table contenst Display",exp);
+        } catch (Exception exp) {
+            LogWriter.writeLogException("Table contenst Display", exp);
         }
     }
 
@@ -561,7 +562,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             Cursor cursor = database.rawQuery(selectRecordQuery, null);
             int columns = cursor.getColumnCount();
             cursor.moveToFirst();
-            if(cursor.getCount()>0) {
+            if (cursor.getCount() > 0) {
                 do {
                     for (int i = 0; i < columns; ++i) {
                         if (logTo == 1) {
@@ -572,8 +573,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     }
                 } while (cursor.moveToNext());
             }
-        }catch(Exception exp){
-            LogWriter.writeLogException("Table contenst Display",exp);
+        } catch (Exception exp) {
+            LogWriter.writeLogException("Table contenst Display", exp);
         }
     }
 
@@ -700,68 +701,69 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         }
     }
-    public void    getallHistory(String Date){
 
-        SQLiteDatabase db=this.getReadableDatabase();
+    public void getallHistory(String Date) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
         // final String MY_QUERY = "SELECT * FROM PlayTimeList a INNER JOIN Advertisement_Video_List b ON a.CampaignID=b.Alloc_Id WHERE a.PlayedDate =?";
-        String rawQuery = "SELECT * FROM " + HIST_PLAY_LIST + " s" +" JOIN " + Advertisement_List+ " p"
-                + " ON s." + CampaignID+ " =p. " + Alloc_Id
-                + " WHERE s." + PlayedDate + " = '" +  Date+"'";
+        String rawQuery = "SELECT * FROM " + HIST_PLAY_LIST + " s" + " JOIN " + Advertisement_List + " p"
+                + " ON s." + CampaignID + " =p. " + Alloc_Id
+                + " WHERE s." + PlayedDate + " = '" + Date + "'";
 
-        Cursor cursor=db.rawQuery(rawQuery,null);
-        File sd= new File(Environment.getExternalStorageDirectory().toString() + "/PTV");
-        String csvFile="LogData.xls";
-        File directory=new File(sd.getAbsolutePath());
+        Cursor cursor = db.rawQuery(rawQuery, null);
+        File sd = new File(Environment.getExternalStorageDirectory().toString() + "/PTV");
+        String csvFile = "LogData.xls";
+        File directory = new File(sd.getAbsolutePath());
         if (!directory.isDirectory()) {
             directory.mkdirs();
         }
         try {
-            File file=new File(directory,csvFile);
-            WorkbookSettings wbSettings=new WorkbookSettings();
-            wbSettings.setLocale(new Locale("en","EN"));
+            File file = new File(directory, csvFile);
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
             WritableWorkbook workbook;
-            workbook= Workbook.createWorkbook(file,wbSettings);
-            WritableSheet sheet=workbook.createSheet("LogData",0);
-            sheet.addCell(new Label(0,0,"ID"));
-            sheet.addCell(new Label(1,0,"VideoName"));
-            sheet.addCell(new Label(2,0,"PlayedTime"));
-            sheet.addCell(new Label(3,0,"PlayedDate"));
-            sheet.addCell(new Label(4,0,"VideoIDServ"));
-            sheet.addCell(new Label(5,0,"CampaignID"));
-            sheet.addCell(new Label(6,0,"TotalNumImpression"));
-            sheet.addCell(new Label(7,0,"RemainingImpression"));
-            sheet.addCell(new Label(8,0,"TodaysImpression"));
-            sheet.addCell(new Label(9,0,"PlayedToday"));
-            sheet.addCell(new Label(10,0,"PercentPlayed"));
-            sheet.addCell(new Label(11,0,"TotalPlayed"));
-            sheet.addCell(new Label(12,0,"EndDate"));
+            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableSheet sheet = workbook.createSheet("LogData", 0);
+            sheet.addCell(new Label(0, 0, "ID"));
+            sheet.addCell(new Label(1, 0, "VideoName"));
+            sheet.addCell(new Label(2, 0, "PlayedTime"));
+            sheet.addCell(new Label(3, 0, "PlayedDate"));
+            sheet.addCell(new Label(4, 0, "VideoIDServ"));
+            sheet.addCell(new Label(5, 0, "CampaignID"));
+            sheet.addCell(new Label(6, 0, "TotalNumImpression"));
+            sheet.addCell(new Label(7, 0, "RemainingImpression"));
+            sheet.addCell(new Label(8, 0, "TodaysImpression"));
+            sheet.addCell(new Label(9, 0, "PlayedToday"));
+            sheet.addCell(new Label(10, 0, "PercentPlayed"));
+            sheet.addCell(new Label(11, 0, "TotalPlayed"));
+            sheet.addCell(new Label(12, 0, "EndDate"));
 
             if ((cursor != null) && (cursor.getCount() > 0)) {
                 if (cursor.moveToFirst()) {
                     do {
-                        String id =String.valueOf(cursor.getInt(0)) ;
+                        String id = String.valueOf(cursor.getInt(0));
                         String videoname = cursor.getString(1);
                         long PlayedTimeMills = cursor.getLong(2);
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                         // Create a calendar object that will convert the date and time value in milliseconds to date.
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTimeInMillis(PlayedTimeMills);
-                        String hms= formatter.format(calendar.getTime()).substring(10);
+                        String hms = formatter.format(calendar.getTime()).substring(10);
                         String PlayedDate = cursor.getString(3);
                         String VideoIDServ = cursor.getString(4);
                         String CampaignID = String.valueOf(cursor.getInt(5));
-                        String TotalNumImpression =String.valueOf(cursor.getInt(6));
+                        String TotalNumImpression = String.valueOf(cursor.getInt(6));
                         String RemainingImpression = String.valueOf(cursor.getInt(7));
-                        String TotalPlayed=String.valueOf(cursor.getInt(27));
+                        String TotalPlayed = String.valueOf(cursor.getInt(27));
                         String TodaysImpression = String.valueOf(cursor.getInt(8));
                         String PlayedToday = String.valueOf(cursor.getInt(9));
                         String PercentPlayed = String.valueOf(cursor.getInt(10));
-                        String EndDate= cursor.getString(25);
-                        String extension= cursor.getString(29);
+                        String EndDate = cursor.getString(25);
+                        String extension = cursor.getString(29);
 
                         int i = cursor.getPosition() + 1;
                         sheet.addCell(new Label(0, i, id));
-                        sheet.addCell(new Label(1, i, videoname+"."+extension));
+                        sheet.addCell(new Label(1, i, videoname + "." + extension));
                         sheet.addCell(new Label(2, i, hms));
                         sheet.addCell(new Label(3, i, PlayedDate));
                         sheet.addCell(new Label(4, i, VideoIDServ));
@@ -780,10 +782,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 cursor.close();
                 workbook.write();
                 workbook.close();
-            }
-            else {
+            } else {
                 Toast.makeText(context, "No Data", Toast.LENGTH_SHORT).show();
-                Log.d("N_","nodata");}
+                Log.d("N_", "nodata");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (RowsExceededException e) {
@@ -793,54 +795,77 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public Cursor sentEmail(String date){
 
-        SQLiteDatabase db=this.getReadableDatabase();
-        String rawQuery = "SELECT * FROM " + HIST_PLAY_LIST + " s" +" JOIN " + Advertisement_List+ " p"
-                + " ON s." + CampaignID+ " =p. " + Alloc_Id
-                + " WHERE s." + PlayedDate + " = '" +  date+"'";
+    public Cursor sentEmail(String date) {
 
-        Cursor cursor=db.rawQuery(rawQuery,null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        String rawQuery = "SELECT * FROM " + HIST_PLAY_LIST + " s" + " JOIN " + Advertisement_List + " p"
+                + " ON s." + CampaignID + " =p. " + Alloc_Id
+                + " WHERE s." + PlayedDate + " = '" + date + "'";
+
+        Cursor cursor = db.rawQuery(rawQuery, null);
         return cursor;
     }
-    public Cursor  CheckEmail(){
+
+    public Cursor CheckEmail() {
+
         Date todayDate = Calendar.getInstance().getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String todayString = formatter.format(todayDate);
 
-        SQLiteDatabase db=this.getReadableDatabase();
-        String rawQuery = "SELECT * FROM " + SENT_EMAIL + " s" +" JOIN " + Advertisement_List+ " p"
-                + " ON s." + CampaignID2+ " =p. " + Alloc_Id
-                + " WHERE s." + EmailStatus2 + " = '" +  0 +"'" +"AND s." + PlayedDate2 + " NOT LIKE "+ "'%"+todayString+"%'";
 
-        Cursor cursor=db.rawQuery(rawQuery,null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        String rawQuery = "SELECT * FROM " + SENT_EMAIL + " s" + " INNER JOIN " + Advertisement_List + " p"
+                + " ON s." + CampaignID2 + " =p. " + Alloc_Id
+                + " WHERE s." + EmailStatus2 + " = '" + 0 + "'" + "AND s." + PlayedDate2 + " NOT LIKE " + "'%" + todayString + "%'";
+
+        Cursor cursor = db.rawQuery(rawQuery, null);
 
 
         return cursor;
     }
+    public Cursor CheckEmails() {
+
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String todayString = formatter.format(todayDate);
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String rawQuery = "SELECT * FROM " + SENT_EMAIL
+                + " WHERE " + EmailStatus2 + " = '" + 0 + "'" + "AND " + PlayedDate2 + " NOT LIKE " + "'%" + todayString + "%'";
+
+        Cursor cursor = db.rawQuery(rawQuery, null);
+
+
+        return cursor;
+    }
+
     public void updateData(String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(EmailStatus2,1);
         // db.update(SENT_EMAIL, contentValues, PlayedDate2 + " = " +String.valueOf(date),null);
-        db.update(SENT_EMAIL, contentValues, "PlayedDate2 =? " , new String[] { date });
+        db.update(SENT_EMAIL, contentValues, "PlayedDate2 =? ", new String[]{date});
         db.close();
 
     }
-    public Cursor CheckAdvt(){
+
+    public Cursor CheckAdvt() {
         Date todayDate = Calendar.getInstance().getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String todayString = formatter.format(todayDate);
-        SQLiteDatabase db=this.getReadableDatabase();
-        String querry=" SELECT * FROM "+ Advertisement_List  ;
-        Cursor cursor=db.rawQuery(querry,null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        String querry = " SELECT * FROM " + Advertisement_List;
+        Cursor cursor = db.rawQuery(querry, null);
         return cursor;
     }
-    public void DeleteAllCampaigns(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String rawQuery = "SELECT * FROM " + Advertisement_List  ;
 
-        Cursor cursor=db.rawQuery(rawQuery,null);
+    public void DeleteAllCampaigns() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String rawQuery = "SELECT * FROM " + Advertisement_List;
+
+        Cursor cursor = db.rawQuery(rawQuery, null);
 
         if ((cursor != null) && (cursor.getCount() > 0)) {
             if (cursor.moveToFirst()) {
@@ -853,24 +878,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
                     String todayString = formatter.format(todayDate);
                     todayString = todayString.replace(" ", "");
-                    String deviceuuid=CommonDataArea.uuid;
-                    String commenPath = "http://publictvads.in/modified/webservicelive/update_campaign_status.php?campaignid="+campaignId+"&mapid="+mapId+ "&deviceid="+CommonDataArea.uuid+"&campaignStatus="+1+ "&timestamp="+todayString;
-                    Log.d("zzz",commenPath);
+                    String deviceuuid = CommonDataArea.uuid;
+                    String commenPath = "http://publictvads.in/modified/webservicelive/update_campaign_status.php?campaignid=" + campaignId + "&mapid=" + mapId + "&deviceid=" + CommonDataArea.uuid + "&campaignStatus=" + 1 + "&timestamp=" + todayString;
+                    Log.d("zzz", commenPath);
                     ArrayList<String> camp = new ArrayList<String>();
                     camp.add(commenPath);
-                    Log.d("aaaa",String.valueOf(camp));
+                    Log.d("aaaa", String.valueOf(camp));
 
 
                     //db.execSQL("delete from "+ Advertisement_List +" WHERE " + _Id + "=" + id );
-                    int hh=db.delete(Advertisement_List, _Id + "=" +id, null);
-                    Log.d("qqqqq",String.valueOf(hh));
-                    if(hh==1 && campaignId!=null && mapId !=null && deviceuuid!=null &&  todayString !=null){
-                        CampaignDetails cam=new CampaignDetails();
+                    int hh = db.delete(Advertisement_List, _Id + "=" + id, null);
+                    Log.d("qqqqq", String.valueOf(hh));
+                    if (hh == 1 && campaignId != null && mapId != null && deviceuuid != null && todayString != null) {
+                        CampaignDetails cam = new CampaignDetails();
                         cam.execute(camp);
                     }
                 }
                 while (cursor.moveToNext());
-            }}
+            }
+        }
 
 
     }
@@ -885,18 +911,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             String commenPath = camp.get(0);
             System.out.print(commenPath);
-            Log.d("url",commenPath);
+            Log.d("url", commenPath);
 
-            try{
+            try {
                 URL uRl = new URL(commenPath);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) uRl.openConnection();
                 httpURLConnection.connect();
                 httpURLConnection.getResponseCode();
-                System.out.print("Response="+httpURLConnection.getResponseCode());
-                Log.d("ssss","Response="+httpURLConnection.getResponseCode());
+                System.out.print("Response=" + httpURLConnection.getResponseCode());
+                Log.d("ssss", "Response=" + httpURLConnection.getResponseCode());
                 //BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            catch (Exception e){e.printStackTrace();}
             return null;
         }
     }

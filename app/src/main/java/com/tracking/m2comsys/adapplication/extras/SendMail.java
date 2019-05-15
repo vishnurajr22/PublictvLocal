@@ -129,7 +129,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
             Date todayDate = Calendar.getInstance().getTime();
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             String todayString = formatter.format(todayDate);
-            messageBodyPart.setFileName("download-Rockchip "+todayString);
+            messageBodyPart.setFileName("Rockchip "+todayString);
 
 
 

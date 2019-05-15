@@ -252,17 +252,17 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
 
-            if (mWifi.isConnected()) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Toast.makeText(MainActivity.this,"previous mails",Toast.LENGTH_LONG).show();
-                        Intent background = new Intent(MainActivity.this, BootService.class);
-
-                        MainActivity.this.startService(background);
-                    }
-                }, 20 * 1000);
-            }
+//            if (mWifi.isConnected()) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //Toast.makeText(MainActivity.this,"previous mails",Toast.LENGTH_LONG).show();
+//                        Intent background = new Intent(MainActivity.this, BootService.class);
+//
+//                        MainActivity.this.startService(background);
+//                    }
+//                }, 20 * 1000);
+//            }
 
 
             CommonDataArea.uuid = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -345,16 +345,9 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
             ConnectivityManager connManager2 = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo mWifi2 = connManager2.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (mWifi2.isConnected()) {
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        createAlarm();
-                    }
-                }, 80 * 1000);
-            }
+//            if (mWifi2.isConnected()) {
+//                   createAlarm();
+//            }
 
         } catch (Exception exp) {
             LogWriter.writeLogException("Create", exp);
@@ -378,7 +371,7 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 3000, mPendingIntent);
         finish();
-        System.exit(0);
+//        System.exit(0);
     }
 
     void initRTC() {
@@ -2240,8 +2233,8 @@ public class MainActivity extends YouTubeBaseActivity implements YouTubePlayer.O
         Calendar cal_now = Calendar.getInstance();
         cal_now.setTime(dat);
         cal_alarm.setTime(dat);
-        cal_alarm.set(Calendar.HOUR_OF_DAY, 21);//set the alarm time
-        cal_alarm.set(Calendar.MINUTE, 30);
+        cal_alarm.set(Calendar.HOUR_OF_DAY, 16);//set the alarm time
+        cal_alarm.set(Calendar.MINUTE, 43);
         cal_alarm.set(Calendar.SECOND, 0);
 
         if (cal_alarm.before(cal_now)) {

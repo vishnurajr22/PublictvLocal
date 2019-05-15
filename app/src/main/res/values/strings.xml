@@ -8,5 +8,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_advertisement">Advertisement</string>
+    <string name="video_name">VIDEO NAME</string>
 
 </resources>
