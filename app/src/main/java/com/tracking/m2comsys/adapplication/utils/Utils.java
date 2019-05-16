@@ -87,9 +87,7 @@ public class Utils {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnected()) {
             return true;
-        } else
-            return false;
-
+        } else return false;
     }
 
     public static long getAvailableSpace() {
@@ -127,13 +125,21 @@ public class Utils {
     static Object syncObj = new Object();
 
     public static void sendLogToServer(final String log, final Context context) {
+        Log.d("wifiConnectCheck","calling from sendLogToServer");
         //sendLog(CommonDataArea.uuid, Uri.encode(log));
         list.add(log);
-        if ((sendToServer != null) && (sendToServer.isAlive())) {
-            synchronized (syncObj) {
-                syncObj.notify();
+        try {
+            if ((sendToServer != null) && (sendToServer.isAlive())) {
+                synchronized (syncObj) {
+                    Log.d("wifiConnectCheck","thread notify");
+                    syncObj.notify();
+                }
+                return;
             }
-            return;
+        }
+        catch (Exception e)
+        {
+            Utils.sendLogToServer("syncObj:"+e.getMessage(),context);
         }
         System.out.println("Call Log = ");
         //http://publictvads.in/WebServiceLive/UpdateLastContactedTime.php?did=3ab7afe13f5996e8
@@ -145,9 +151,10 @@ public class Utils {
                     if (list.isEmpty()) {
                         synchronized (syncObj) {
                             try {
+                                Log.d("wifiConnectCheck","thread wait");
                                 syncObj.wait();
                             } catch (Exception exp) {
-
+                                Utils.sendLogToServer("syncObj:"+exp.getMessage(),context);
                             }
                         }
                     }
@@ -168,11 +175,12 @@ public class Utils {
 
     public static synchronized boolean SendToServerFunc(final String log, final Context context) {
         System.out.println("Call Thread = ");
+        Log.d("wifiConnectCheck","calling sendToServerFunc");
         try {
-            if (!internetCheck()) {
-                System.out.println("Call internet = ");
-                return false;
-            }
+//            if (!internetCheck()) {
+//                System.out.println("Call internet = ");
+//                return false;
+//            }
             int currentVers = 0;
             sharedPreferences = context.getSharedPreferences(preference, MODE_PRIVATE);
             currentVers = sharedPreferences.getInt(VERSION_CODE, 0);
@@ -180,6 +188,15 @@ public class Utils {
             URL uRl = new URL(commenPath);
             HttpURLConnection httpURLConnection = (HttpURLConnection) uRl.openConnection();
             httpURLConnection.connect();
+//           if(httpURLConnection.getResponseCode()!=200)
+//           {
+//               Log.d("wifiConnectCheck","response code not 200");
+//               LogWriter.writeLogWifi("UtilsWifiCheck", "183 cant connect return "+httpURLConnection.getResponseCode());
+//           }
+//           else
+//           {
+//               Log.d("wifiConnectCheck","response code is 200");
+//           }
             Log.d("connect", "Connected");
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             String line = null;
@@ -198,7 +215,37 @@ public class Utils {
         }
         return false;
     }
+    public  boolean online_status(final String log, final Context context) {
+        System.out.println("Call Thread = ");
+        Log.d("wifiConnectCheck","calling sendToServerFunc");
+        try {
 
+            int currentVers = 0;
+            sharedPreferences = context.getSharedPreferences(preference, MODE_PRIVATE);
+            currentVers = sharedPreferences.getInt(VERSION_CODE, 0);
+            String commenPath = "http://publictvads.in/WebServiceLiveTest/online_status.php?did=" + CommonDataArea.uuid + "&info=" + Uri.encode(log) + "&ver=" + currentVers;
+            URL uRl = new URL(commenPath);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) uRl.openConnection();
+            httpURLConnection.connect();
+
+            Log.d("connect", "Connected");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            String line = null;
+            StringBuilder sb = new StringBuilder();
+            // Read Server Response
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            System.out.println("sb.toString() = " + sb.toString());
+            CommonDataArea.lastLogSendTime = System.currentTimeMillis();
+            if (versionCodeChange(Integer.parseInt(sb.toString()), context)) {
+                return true;
+            }
+        } catch (Exception exp) {
+            LogWriter.writeLogException("SendToServer", exp);
+        }
+        return false;
+    }
     public static void updatePlayHist(final String allocId, final String videoId, final String playedTime) {
         //http://publictvads.in/WebServicelive/UpdatePlayHist.php?devID=47041a2851f28dd7&videoID=46&allocID=412&dateTime='09-27-2017 12:30:23'
         new Thread(new Runnable() {
@@ -422,15 +469,13 @@ public class Utils {
         editor.commit();
     }
 
-    /*rtctime check*/
     public static long getAdjustedTimeMills(Context con) {
         try {
             long currentNormal = 0;
             long adjustedDevTimeMills = 0;
 
             if (CommonDataArea.timeStatus == CommonDataArea.TIMESTATUS_USEDEVICE_TIME) {
-                //adjustedDevTimeMills = System.currentTimeMillis();
-                adjustedDevTimeMills = new Date().getTime();
+                adjustedDevTimeMills = System.currentTimeMillis();
             }
             if (CommonDataArea.timeStatus == CommonDataArea.TIMESTATUS_USESERVER_TIME) {
 
@@ -611,6 +656,7 @@ public class Utils {
             public void run() {
 
 
+
 //                    try {
 //                        HttpClient httpclient = new DefaultHttpClient();
 //                        HttpResponse response = httpclient.execute(new HttpGet("https://google.com/"));
@@ -715,31 +761,29 @@ public class Utils {
     //and make decision how to play
     public static void adjustPlayMethod(Context context) {
         try {
-            if (internetCheck()) {
-                GoogleTime time = new GoogleTime();
-                final Thread t1 = new Thread(time);
-                t1.start();
-                t1.join();
-
-            }
 
 
-            if (CommonDataArea.rtcTime != null) {
-                Log.d("timeused>>", "rtc_time");
+            GoogleTime time=new GoogleTime();
+            final Thread t1=new Thread(time);
+            t1.start();
+            t1.join();
+            if(CommonDataArea.rtcTime!=null){
                 CommonDataArea.timeStatus = CommonDataArea.TIMESTATUS_RTC_TIME;
                 LogWriter.writeLogPlayMethod("Playmethod", "TIMESTATUS_RTC_TIME");
                 CommonDataArea.curSysStatus_Playmethod = "TIMESTATUS_RTC_TIME";
-            } else if (CommonDataArea.GoogleTime != null) {
-                Log.d("timeused>>", "google_time");
+            }
+            else if(CommonDataArea.rtcTime==null && CommonDataArea.GoogleTime!=null){
                 CommonDataArea.timeStatus = CommonDataArea.TIMESTATUS_USESERVER_TIME;
                 LogWriter.writeLogPlayMethod("Playmethod", "TIMESTATUS_USESERVER_TIME");
-                CommonDataArea.curSysStatus_Playmethod = "TIMESTATUS_USESERVER_TIME";
-            } else {
-                Log.d("timeused>>", "System_time");
+                CommonDataArea.curSysStatus_Playmethod ="TIMESTATUS_USESERVER_TIME";
+            }
+            else{
                 CommonDataArea.timeStatus = CommonDataArea.TIMESTATUS_USEDEVICE_TIME;
                 LogWriter.writeLogPlayMethod("Playmethod", "TIMESTATUS_USEDEVICE_TIME");
-                CommonDataArea.curSysStatus_Playmethod = "TIMESTATUS_USEDEVICE_TIME";
+                CommonDataArea.curSysStatus_Playmethod ="TIMESTATUS_USEDEVICE_TIME";
             }
+
+
 
 
 //            long serverTime = getSavedServerTime(context);
@@ -832,11 +876,4 @@ public class Utils {
 
 
     }
-    public static void setChannelDurationw(Context context, int data) {
-
-        // channelDuration = Integer.parseInt((data.substring(15, data.length())).trim());
-        sharedPreferences = context.getSharedPreferences(preference, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(chnlDrtn, data);
-        editor.commit();
-}}
+}

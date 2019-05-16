@@ -7,13 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
+import android.util.Log;
 
-import com.google.api.client.util.DateTime;
-import com.tracking.m2comsys.adapplication.Activity.MainActivity;
 import com.tracking.m2comsys.adapplication.Activity.SplashScreen;
 
 import java.util.Calendar;
@@ -26,7 +21,7 @@ import java.util.List;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
 
         boolean isAppRunning = isAppForground(context);
         if (!isAppRunning) {
@@ -43,9 +38,32 @@ public class AlarmReceiver extends BroadcastReceiver {
             CommonDataArea.appNotRunningCount = 0;
         }
 
+        GoogleTime time = new GoogleTime();
+
+        final Thread t1 = new Thread(time);
+        t1.start();
+        if(CommonDataArea.GoogleTime!=null)
+        {
+            Thread thread=new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        new Utils().online_status("HeartBeat>>"+CommonDataArea.GoogleTime.toString(),context);
+
+                    }
+                    catch (Exception e)
+                    {
+                        LogWriter.writeLogException("SendToServer", e);
+                    }
+                }
+            });
+            thread.start();
+
+        }
+
         //Send HB to server
         if((System.currentTimeMillis()-CommonDataArea.lastLogSendTime)>CommonDataArea.hbTimeDelay){
-           sendHB(context);
+            sendHB(context);
         }
         //Update campaign status
         ++CommonDataArea.updateStatusDelay;
@@ -67,6 +85,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                         PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager mgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                Log.d("SystemExit","System exit due to Alarmreceiver");
+
                 System.exit(0);
 
             }

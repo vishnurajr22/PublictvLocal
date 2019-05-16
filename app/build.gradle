@@ -9,7 +9,7 @@ android {
         applicationId "com.tracking.m2comsys.adapplication"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 27
+        versionCode 28
         versionName "PTV20190110.1"
         //PTV20190110.1
         //RTC Integrated
